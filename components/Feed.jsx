@@ -1,32 +1,35 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import PromptCard from './PromptCard';
+import PromptCard from "./PromptCard";
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
     <div className="mt-16 prompt_layout">
       {data.map((post) => (
-        <PromptCard key={post._id} post={post} handleTagClick={handleTagClick} />
+        <PromptCard
+          key={post._id}
+          post={post}
+          handleTagClick={handleTagClick}
+        />
       ))}
     </div>
   );
 };
 
 const Feed = () => {
-  const [allPosts, setAllPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
-  // Search states
-  const [searchText, setSearchText] = useState('');
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
 
   const fetchPosts = async () => {
-    const response = await fetch('/api/prompt');
+    const response = await fetch("/api/prompt");
     const data = await response.json();
 
-    setAllPosts(data);
+    setPosts(data);
   };
 
   useEffect(() => {
@@ -34,9 +37,12 @@ const Feed = () => {
   }, []);
 
   const filterPrompts = (searchtext) => {
-    const regex = new RegExp(searchtext, 'i'); // 'i' flag for case-insensitive search
-    return allPosts.filter(
-      (item) => regex.test(item.creator.username) || regex.test(item.tag) || regex.test(item.prompt)
+    const regex = new RegExp(searchtext, "i");
+    return posts.filter(
+      (item) =>
+        regex.test(item.creator.username) ||
+        regex.test(item.tag) ||
+        regex.test(item.prompt)
     );
   };
 
@@ -44,7 +50,6 @@ const Feed = () => {
     clearTimeout(searchTimeout);
     setSearchText(e.target.value);
 
-    // debounce method
     setSearchTimeout(
       setTimeout(() => {
         const searchResult = filterPrompts(e.target.value);
@@ -73,11 +78,13 @@ const Feed = () => {
         />
       </form>
 
-      {/* All Prompts */}
       {searchText ? (
-        <PromptCardList data={searchedResults} handleTagClick={handleTagClick} />
+        <PromptCardList
+          data={searchedResults}
+          handleTagClick={handleTagClick}
+        />
       ) : (
-        <PromptCardList data={allPosts} handleTagClick={handleTagClick} />
+        <PromptCardList data={posts} handleTagClick={() => {}} />
       )}
     </section>
   );
