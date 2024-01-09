@@ -4,8 +4,10 @@
 [참고영상](https://www.youtube.com/watch?v=wm5gMKuwSYk&list=PLae0MNlb0EigrgB0rMwE2j9wu-BX5YdqT&index=1)
 
 ## 설치
+```js
 npx create-next-app@letest .   
 npm install bcrypt   
 npm install mongodb   
 npm install mongoose   
-npm install next-auth   
+npm install next-auth
+```
