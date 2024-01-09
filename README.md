@@ -68,3 +68,11 @@ usePathname()과 useRouter()를 통해 현재 경로 정보와 라우터를 가�
 SessionProvider를 통해 전달된 세션 정보를 하위 컴포넌트(children)에 제공합니다.
 session 객체를 받아서 해당 세션 정보를 하위 컴포넌트로 전달합니다.
 ```
+## 트러블슈팅
+문제: 마이페이지에서 사용자가 작성한 피드를 불러오지 못하는 이슈 발생
+해결: Next.js의 폴더 구조를 수정하였습니다.
+```
+이전 폴더 경로: api/users/route.js
+변경된 경로: api/users/[id]/posts/routes.js
+```
+마이페이지에서 사용자가 작성한 피드를 불러오지 못하는 문제를 해결하기 위해 Next.js의 폴더 경로를 수정하였습니다. 이전에는 api/users/route.js 경로를 사용하고 있었으나, 이를 변경하여 api/users/[id]/posts/routes.js로 수정하였습니다.
